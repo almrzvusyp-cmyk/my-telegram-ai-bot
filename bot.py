@@ -73,7 +73,7 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception:
         await update.message.reply_text("Не удалось распознать голосовое сообщение.")
 
-async def main():
+def main():
     app = Application.builder().token(
         os.environ["TELEGRAM_BOT_TOKEN"]
     ).build()
@@ -82,9 +82,7 @@ async def main():
     app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
     app.add_handler(MessageHandler(filters.VOICE, voice_handler))
 
-    await app.initialize()
-    await app.start()
-    await app.updater.start_polling()
+    app.run_polling()
 
-import asyncio
-asyncio.run(main())
+if __name__ == "__main__":
+    main()
